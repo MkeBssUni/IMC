@@ -13,80 +13,90 @@
   </head>
   <body>
     <div class="container fluid">
-      <div class="row">
-        <div class="col">
-          <form class="needs-validation" novalidate>
-            <div class="input-group input-group-sm mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-sm"
-                >Kilogramos</span
-              >
-              <input
-                type="number"
-                class="form-control mt-50"
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-sm"
-                id="kg"
-                pattern="[0-9.]+"
-                required
-              />
-            </div>
-
-            <div class="input-group input-group-sm mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-sm"
-                >Altura en metros</span
-              >
-              <input
-                type="text"
-                class="form-control mt-50"
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-sm"
-                id="m"
-                pattern="[0-9.]+"
-                required
-              />
-            </div>
-
-            <div class="row">
-              <div class="col">
-                <button type="button" class="btn btn-success" id="buttonCalc" onclick="calcular()">
-                  Calcular
-                </button>
+      <header class="mt-20">
+        <h1 class="text-center">Calculadora de IMC</h1>
+      </header>
+      <div class="container mt-20">
+        <div class="row">
+          <div class="col">
+            <form class="needs-validation" novalidate>
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"
+                  >Kilogramos</span
+                >
+                <input
+                  type="number"
+                  class="form-control mt-50"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  id="kg"
+                  pattern="[0-9.]+"
+                  required
+                />
               </div>
-              <div class="col">
-                <button type="reset" class="btn btn-danger" id="btnClean">
-                  Limpiar
-                </button>
+  
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm"
+                  >Altura en metros</span
+                >
+                <input
+                  type="text"
+                  class="form-control mt-50"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  id="m"
+                  pattern="[0-9.]+"
+                  required
+                />
               </div>
-            </div>
-          </form>
-        </div>
-        <div class="col">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">IMC</th>
-                <th scope="col">Clasificación</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Menos de 18.4</td>
-                <td id="pesoBajo"><span class="">Peso bajo</span></td>
-              </tr>
-              <tr>
-                <td>De 18.5 a 24.9</td>
-                <td id="normal"><span class="">Normal</span></td>
-              </tr>
-              <tr>
-                <td>25 a 29.9</td>
-                <td id="sobrePeso"><span class="">Sobrepeso</span></td>
-              </tr>
-              <tr>
-                <td>Mayor a 30</td>
-                <td id="obesidad"><span class="">Obesidad</span></td>
-              </tr>
-            </tbody>
-          </table>
+  
+              <div class="row">
+                <div class="col">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    id="buttonCalc"
+                    onclick="calcular()"
+                  >
+                    Calcular
+                  </button>
+                </div>
+                <div class="col">
+                  <button type="reset" class="btn btn-danger" id="btnClean">
+                    Limpiar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">IMC</th>
+                  <th scope="col">Clasificación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Menos de 18.4</td>
+                  <td id="pesoBajo"><span class="">Peso bajo</span></td>
+                </tr>
+                <tr>
+                  <td>De 18.5 a 24.9</td>
+                  <td id="normal"><span class="">Normal</span></td>
+                </tr>
+                <tr>
+                  <td>25 a 29.9</td>
+                  <td id="sobrePeso"><span class="">Sobrepeso</span></td>
+                </tr>
+                <tr>
+                  <td>Mayor a 30</td>
+                  <td id="obesidad"><span class="">Obesidad</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -107,31 +117,40 @@
       alert("Por favor ingresa los datos");
       return false;
     }
-    
+
     if (kg < 0 || m < 0) {
       alert("Por favor ingresa datos positivos");
-        document.getElementById("kg").value = "";
-        document.getElementById("m").value = "";
+      document.getElementById("kg").value = "";
+      document.getElementById("m").value = "";
       return false;
     }
 
     console.log("Kilos", kg);
     console.log("metros", m);
-    var imc = kg / (m ^ 2);
+    var imc = kg / (m * m);
     console.log("indice corporal: ", imc);
+    imc = imc.toFixed(2);
 
+    var pesoBajo = document.getElementById("pesoBajo");
+    var normal = document.getElementById("normal");
+    var sobrePeso = document.getElementById("sobrePeso");
+    var obesidad = document.getElementById("obesidad");
+
+    pesoBajo.innerHTML = "<span class=''>Peso bajo</span>";
+    normal.innerHTML = "<span class=''>Normal</span>";
+    sobrePeso.innerHTML = "<span class=''>Sobrepeso</span>";
+    obesidad.innerHTML = "<span class=''>Obesidad</span>";
+    
     if (imc <= 18.4) {
-      var pesoBajo = document.getElementById("pesoBajo");
-      pesoBajo.innerHTML = "<span class='badge text-bg-warning'>Peso bajo</span>";
-    }else if (imc >= 18.5 && imc <= 24.9) {
-      var normal = document.getElementById("normal");
-      normal.innerHTML = "<span class='badge text-bg-success'>Normal</span>";
-    }else if(imc >= 25 && imc <= 29.9){
-      var sobrePeso = document.getElementById("sobrePeso");
-      sobrePeso.innerHTML = "<span class='badge text-bg-warning'>Sobrepeso</span>";
-    }else if(imc >= 30){
-        var obesidad = document.getElementById("obesidad");
-        obesidad.innerHTML = "<span class='badge text-bg-danger'>Obesidad</span>";
+      pesoBajo.innerHTML =
+        `<span class='badge text-bg-warning'>Peso bajo, IMC= ${imc}</span>`;
+    } else if (imc >= 18.5 && imc <= 24.9) {
+      normal.innerHTML = `<span class='badge text-bg-success'>Normal, IMC= ${imc}</span>`
+    } else if (imc >= 25 && imc <= 29.9) {
+      sobrePeso.innerHTML =
+        `<span class='badge text-bg-warning'>Sobrepeso, IMC= ${imc}</span>`;
+    } else if (imc >= 30) {
+      obesidad.innerHTML = `<span class='badge text-bg-danger'>Obesidad, IMC= ${imc}</span>`
     }
-}
+  }
 </script>
