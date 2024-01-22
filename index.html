@@ -118,8 +118,8 @@
       return false;
     }
 
-    if (kg < 0 || m < 0) {
-      alert("Por favor ingresa datos positivos");
+    if (kg <= 0 || m <= 0) {
+      alert("Por favor ingresa datos validos (mayores a 0)");
       document.getElementById("kg").value = "";
       document.getElementById("m").value = "";
       return false;
